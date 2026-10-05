@@ -1,0 +1,82 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+
+# PyTorch checkpoints & models
+*.pth
+*.onnx
+*.pt
+*.bin
+
+# Training output
+output/
+pretrain/
+
+# Logs
+*.log
+*_log.txt
+
+# Reference repos (not part of this project)
+reference/
+lib/
+scripts/
+docs/
+
+# BOP results
+bop_results/
+bop_eval_results/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+!sub/test_kpt.ipynb
+
+# IDE / editor
+.vscode/
+.idea/
+
+# Ruff cache
+.ruff_cache/
+
+# Claude Code / OMC internal state
+.omc/
+.omx/
+.claude/
+.analysis/
+.sisyphus/
+
+# OS
+.DS_Store
+Thumbs.db
+
+AGENTS.md
+bop_log.txt
+CLAUDE.md
+bop.py
+test.py
+run_bop_tless_rgbd.py
+
+OCT05/
+SEP17/
+dataset_blender/
+dataset_foundationpose/
+
+backup/
+
+# Experimental backbones / encoders (not part of main model)
+src/nn/backbone/dinov3_dpt.py
+src/nn/backbone/efficientvit.py
+src/nn/backbone/efficientnat.py
+src/zoo/race6d/hybrid_encoder_na.py
+configs/race6d/r50vd/race6d_efficientnat_hb_rgb.yml
+
+my_data/
+my_data_bu/
+.venv/
+grave/
+training_analysis/
