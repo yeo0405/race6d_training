@@ -1,24 +1,29 @@
 ## Transfer
-python tools/prepare_pose_rgbd_dataset.py \
-  --source /home/yeo/Downloads/POSE/dataset_ft \
-  --output my_data/pose_rgbd_race6d \
-  --category-yaml configs/race6d/include/pose_dataset2coco_category.yml \
-  --max-depth-mm 2000 \
-  --copy-rgb
+```bash
+python tools/prepare_blenderproc_race6d.py \
+    --source ~/Downloads/BlenderporcGenaratedDataset/iphone_only/bop_data/hb/train_pbr \
+    --output iphone_only/pose_rgbd_race6d \
+    --models-dir ~/Downloads/DTTD_obj/Apple_pick \
+    --width 640 \
+    --height 480 \
+    --val-ratio 0.1 \
+    --seed 42 \
+    --max-depth-mm 2000
+```
 
-python tools/prepare_pose_rgbd_dataset_FT.py \
-  --source /home/yeo/Downloads/POSE/dataset_ft \
-  --output my_data/pose_rgbd_race6d \
-  --category-yaml configs/race6d/include/pose_dataset2coco_category.yml \
-  --crop-left 240 \
-  --crop-right 240 \
-  --max-depth-mm 2000 \
-  --copy-rgb
+## Merged
 
-- pose_dataset2coco_category.yml
-- include/race6d_r50vd_pose_rgbd.yml
+```bash
+python tools/merge_race6d_datasets.py \
+    --inputs \
+        iphone_only/pose_rgbd_race6d  \
+        box_condition/pose_rgbd_race6d \
+    --output my_data/pose_rgbd_race6d 
+```
 
 ## Visualize
+
+```bash
 python tools/preview_race6d_dataset.py \
   --dataset my_data/pose_rgbd_race6d \
   --category-yaml configs/race6d/include/pose_dataset2coco_category.yml \
@@ -26,6 +31,7 @@ python tools/preview_race6d_dataset.py \
   --num-images 100 \
   --seed 42 \
   --output-dir output/pose_rgbd_preview
+```
 
 ## Check
 python tools/check_race6d_dataset.py \
@@ -40,6 +46,20 @@ python tools/train.py -c configs/race6d/r50vd/race6d_r50vd_pose_rgbd.yml --use-a
 
 ## Test
 python tools/train.py -c configs/race6d/r50vd/race6d_r50vd_pose_rgbd.yml --test-only -r output/last.pth --overlay-dir output/race6d_r50vd_pose_rgbd/overlays --overlay-limit 300 --score-threshold 0.25 --pose-iou-threshold 0.5
+
+## Evaluation
+python tools/eval_per_class.py \
+  -c configs/race6d/r50vd/race6d_r50vd_pose_rgbd.yml \
+  -r Oct26/race6d_1026.pth \
+  --output-dir output/race6d_per_class_050 \
+  --score-threshold 0.50 \
+  --pose-iou-threshold 0.5
+
+# Visualize Evalutaion
+python tools/visualize_evaluation.py \
+  --evaluation-stats output/race6d_per_class/evaluation_stats.json \
+  --per-class-metrics output/race6d_per_class/per_class_metrics.json \
+  --output-dir output/evaluation_visualization
 
 ## Predict Once
 python tools/predict_single.py \
